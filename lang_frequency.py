@@ -1,6 +1,6 @@
 import re
 import sys
-from collections import defaultdict
+from collections import Counter
 
 
 def load_text(filepath):
@@ -9,22 +9,16 @@ def load_text(filepath):
         return text
 
 
-def get_ten_most_frequent_words(text):
+def get_ten_most_frequent_words(text, word_count=10):
     text = re.sub(r"\W", " ", text)
     words = text.lower().split()
-    frequency_by_word = defaultdict(lambda: 0)
-    for word in words:
-        frequency_by_word[word] += 1
-
-    top_ten_frequent_words = sorted(
-        frequency_by_word.items(), key=lambda item: item[1], reverse=True
-    )[:10]
-    return top_ten_frequent_words
+    frequency_by_word = Counter(words)
+    return frequency_by_word.most_common(word_count)
 
 
 def print_most_frequent_words(most_frequent_words):
-    for index, (word, frequency) in enumerate(most_frequent_words):
-        print("{}. {}: {}".format(index + 1, word, frequency))
+    for index, (word, frequency) in enumerate(most_frequent_words, start=1):
+        print("{}. {}: {}".format(index, word, frequency))
 
 
 if __name__ == "__main__":
