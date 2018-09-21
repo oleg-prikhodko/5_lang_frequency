@@ -9,7 +9,7 @@ def load_text(filepath):
         return text
 
 
-def get_ten_most_frequent_words(text, word_count=10):
+def get_most_frequent_words(text, word_count):
     text = re.sub(r"\W", " ", text)
     words = text.lower().split()
     frequency_by_word = Counter(words)
@@ -28,7 +28,7 @@ if __name__ == "__main__":
     filepath = sys.argv[1]
     try:
         text = load_text(filepath)
-        top_ten_frequent_words = get_ten_most_frequent_words(text)
+        top_ten_frequent_words = get_most_frequent_words(text, word_count=10)
         print_most_frequent_words(top_ten_frequent_words)
     except FileNotFoundError:
         sys.exit("File not found")
