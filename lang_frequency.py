@@ -1,7 +1,6 @@
 import re
 import sys
 from collections import defaultdict
-from pprint import pprint
 
 
 def load_text(filepath):
@@ -10,7 +9,7 @@ def load_text(filepath):
         return text
 
 
-def get_most_frequent_words(text):
+def get_ten_most_frequent_words(text):
     text = re.sub(r"\W", " ", text)
     words = text.lower().split()
     frequency_by_word = defaultdict(lambda: 0)
@@ -23,6 +22,11 @@ def get_most_frequent_words(text):
     return top_ten_frequent_words
 
 
+def print_most_frequent_words(most_frequent_words):
+    for index, (word, frequency) in enumerate(most_frequent_words):
+        print("{}. {}: {}".format(index + 1, word, frequency))
+
+
 if __name__ == "__main__":
     if len(sys.argv) < 2:
         sys.exit("No filepath argument")
@@ -30,7 +34,7 @@ if __name__ == "__main__":
     filepath = sys.argv[1]
     try:
         text = load_text(filepath)
-        top_ten_frequent_words = get_most_frequent_words(text)
-        pprint(top_ten_frequent_words)
+        top_ten_frequent_words = get_ten_most_frequent_words(text)
+        print_most_frequent_words(top_ten_frequent_words)
     except FileNotFoundError:
         sys.exit("File not found")
